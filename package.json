@@ -4,7 +4,10 @@
   "description": "Typed react hook for google v2 and v3 reCaptcha",
   "author": "mnik01",
   "license": "MIT",
-  "repository": "mnik01/react-remcaptcha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mnik01/react-remcaptcha.git"
+  },
   "main": "dist/index.js",
   "engines": {
     "node": ">=8",
@@ -63,5 +66,9 @@
   ],
   "dependencies": {
     "prop-types": "^15.7.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/mnik01/react-remcaptcha/issues"
+  },
+  "homepage": "https://github.com/mnik01/react-remcaptcha#readme"
 }
