@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "start": "rollup -c -w",
+    "dev": "rollup -c -w",
     "test": "jest"
   },
   "jest": {
