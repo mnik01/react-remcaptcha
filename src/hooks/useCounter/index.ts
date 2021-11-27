@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import { validateInitialValue } from '../../helpers/validateInitialValue';
 
 type IUseCounter = {
@@ -56,12 +55,4 @@ export const useCounter = (initialValue: number = 0): IUseCounter => {
     validatedInitialValue,
   ]);
   return { count, increment, decrement, reset };
-};
-
-useCounter.PropTypes = {
-  initialValue: PropTypes.number.isRequired,
-};
-
-useCounter.defaultProps = {
-  initialValue: 0,
 };

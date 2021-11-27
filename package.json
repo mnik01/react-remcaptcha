@@ -61,14 +61,17 @@
   "keywords": [
     "react",
     "react hooks",
+    "recaptcha",
+    "captcha",
+    "google",
     "typescript",
     "npm"
   ],
-  "dependencies": {
-    "prop-types": "^15.7.2"
-  },
   "bugs": {
     "url": "https://github.com/mnik01/react-remcaptcha/issues"
   },
-  "homepage": "https://github.com/mnik01/react-remcaptcha#readme"
+  "homepage": "https://github.com/mnik01/react-remcaptcha#readme",
+  "dependencies": {
+    "react-script-hook": "^1.5.0"
+  }
 }
