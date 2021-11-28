@@ -9,7 +9,9 @@ export const Test = () => {
     apiKey: 'lol',
     version: RecaptchaVersionEnum.V2,
     container: containerRef.current,
-    onError: () => {},
+    onError: (error) => {
+      alert(`Error occured in captcha: ${error.message}`)
+    },
     onLoad: () => {},
     onVerify: () => {},
   }
@@ -20,12 +22,12 @@ export const Test = () => {
   return (
     <div>
       <button onClick={forceSubmit}>
-        Submit captcha
+        Force submit captcha
       </button>
 
 
       <div ref={containerRef}>
-        loading
+        Loading...
       </div>
     </div>
   )

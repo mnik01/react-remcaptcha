@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useRecaptcha } from "../hooks/useRecaptcha"
 import { ConfigV3, RecaptchaVersionEnum } from "../hooks/useRecaptcha/types"
 
@@ -12,6 +12,11 @@ export const Test = () => {
 
   const { execute } = useRecaptcha(reCaptchaConfigV3)
 
+
+  // @ts-ignore
+  useEffect(async () => {
+    await execute()
+  }, [])
 
   return (
     <div>
