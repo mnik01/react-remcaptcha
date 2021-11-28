@@ -1,50 +1,39 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useCounter } from '../index';
+import { renderHook } from '@testing-library/react-hooks';
+import { useRecaptcha } from '../index'
+import { ConfigV3, RecaptchaVersionEnum } from '../types';
 
-describe('useCounter tests', () => {
+describe('useRecaptcha v3 tests', () => {
   it('should be defined', () => {
-    expect(useCounter).toBeDefined();
+    expect(useRecaptcha).toBeDefined();
   });
+
+  const config: ConfigV3 = {
+    version: RecaptchaVersionEnum.V3,
+    apiKey: 'lol',
+    onError: () => {},
+    onLoad: () => {},
+  }
+  const idealKey = 'TODO'
 
   it('renders the hook correctly and checks types', () => {
-    const { result } = renderHook(() => useCounter());
-    expect(result.current.count).toBe(0);
-    expect(typeof result.current.count).toBe('number');
-    expect(typeof result.current.increment).toBe('function');
+    const { result } = renderHook(() => useRecaptcha(config));
+
+    expect(result.current.execute).toBeDefined()
+    expect(result.current.execute).toBeTruthy()
+    expect(result.current.execute).toBeInstanceOf(Function)
+    expect(typeof result.current.execute).toBe('function');
   });
 
-  it('should increment counter', () => {
-    const { result } = renderHook(() => useCounter());
-    act(() => {
-      result.current.increment();
-    });
-    expect(result.current.count).toBe(1);
+  // TODO: async code test
+  it('Should pass api object filled after load', () => {
   });
 
-  it('should increment counter from custom initial value', () => {
-    const { result } = renderHook(() => useCounter(10));
-    act(() => {
-      result.current.increment();
-    });
-    expect(result.current.count).toBe(11);
+  it('Should call onLoad', () => {
   });
 
-  it('should decrement counter from custom initial value', () => {
-    const { result } = renderHook(() => useCounter(20));
-    act(() => {
-      result.current.decrement();
-    });
-    expect(result.current.count).toBe(19);
+  it('Should add google script', () => {
   });
 
-  it('should reset counter to updated initial value', () => {
-    let initialValue = 0;
-    const { result, rerender } = renderHook(() => useCounter(initialValue));
-    initialValue = 10;
-    rerender();
-    act(() => {
-      result.current.reset();
-    });
-    expect(result.current.count).toBe(10);
+  it('Should call onError', () => {
   });
 });
