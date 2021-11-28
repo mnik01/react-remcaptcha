@@ -1,5 +1,7 @@
 export type RecaptchaCommonConfig = {
   apiKey: string
+  onLoad: () => void,
+  onError: () => void,
 }
 
 // TODO: Не помешает ли енам в конечном проекте юзеров? ts/js проверить
@@ -11,6 +13,7 @@ export enum RecaptchaVersionEnum {
 export type ConfigV2 = RecaptchaCommonConfig & {
   version: RecaptchaVersionEnum.V2
   container: HTMLDivElement | null,
+  onVerify: () => void,
 }
 export type ConfigV3 = RecaptchaCommonConfig & {
   version: RecaptchaVersionEnum.V3
@@ -18,15 +21,12 @@ export type ConfigV3 = RecaptchaCommonConfig & {
 
 export type RecaptchaConfig = ConfigV2 | ConfigV3
 
-export type RecaptchaApiCommon = {
-  onLoad: () => void,
-  onError: () => void,
-}
+export type RecaptchaApiCommon = {}
 
 export type RecaptchaApiV2 = RecaptchaApiCommon & {
-  onVerify: () => void,
   forceSubmit: () => void,
 }
+
 export type RecaptchaApiV3 = RecaptchaApiCommon & {
   execute: () => Promise<string>,
 }
