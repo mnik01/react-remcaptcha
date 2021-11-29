@@ -1,5 +1,7 @@
 # Typed react hook for google v2 and v3 reCaptcha
 
+TODO: make test coverage and typescript percent badges
+
 - Example of usage:
 TODO
 
