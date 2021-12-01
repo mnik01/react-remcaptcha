@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useScript from "react-script-hook";
 import { v3ApiBasePath } from "./constants";
-import { injectStyle, isBrowser } from "./helpers";
+import { injectStyle, isBrowser } from "../../helpers";
 import {
   ConfigV2,
   ConfigV2Specific,
@@ -100,14 +100,13 @@ export function useRecaptcha({
     useEffect(() => {
       if (recaptcha) {
         // TODO: inject in container in V2 case
-        // In V3 provide execute func setExecute()
       }
     }, [recaptchaLoaded]);
 
 
 
     const v2Api: RecaptchaApiV2 = {
-      forceSubmit: () => {}, // forceSubmit ? forceSubmit : stub func or null as func
+      forceSubmit: () => {},
     }
 
     const v3Api: RecaptchaApiV3 = {
