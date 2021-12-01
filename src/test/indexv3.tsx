@@ -1,26 +1,49 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useRecaptcha } from "../hooks/useRecaptcha"
 import { ConfigV3, RecaptchaVersionEnum } from "../hooks/useRecaptcha/types"
 
-export const Test = () => {
-  const reCaptchaConfigV3: ConfigV3 = {
+enum CaptchaActionsEnum {
+  SUBMIT_COMMENT = 'submit_comment',
+  LOGIN = 'login',
+  SEND_SMS_RESTORE_PASS = 'send_sms',
+  SEND_SMS_SIGN_ON = 'send_sms',
+}
+
+export const Test = ({ onToken }: {onToken: (token: string) => void }) => {
+  const [isCaptchaLoaded, setIsCaptchaLoaded] = useState(false)
+  const reCaptchaConfig: ConfigV3 = {
     version: RecaptchaVersionEnum.V3,
     apiKey: 'lol',
-    onError: () => {},
-    onLoad: () => {},
+    onError: () => {
+      alert('It looks like there is an error in the captcha')
+    },
+    onLoad: () => {
+      setIsCaptchaLoaded(true)
+    },
   }
 
-  const { execute } = useRecaptcha(reCaptchaConfigV3)
+  const { execute } = useRecaptcha(reCaptchaConfig)
 
 
   // @ts-ignore
   useEffect(async () => {
-    await execute()
+    const token = await execute<CaptchaActionsEnum>(
+      CaptchaActionsEnum.SEND_SMS_SIGN_ON
+    )
+
+    // TODO: check is token verifying need and may be included in hook
+    onToken(token)
   }, [])
 
   return (
     <div>
-      loading
+      {isCaptchaLoaded ?
+      <p>
+      loaded
+    </p> : <p>
+        loading
+      </p>
+        }
     </div>
   )
 }

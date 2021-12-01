@@ -6,16 +6,16 @@ describe('useRecaptcha v3 tests', () => {
   it('should be defined', () => {
     expect(useRecaptcha).toBeDefined();
   });
+  const idealKey = 'TODO'
 
   const config: ConfigV3 = {
     version: RecaptchaVersionEnum.V3,
-    apiKey: 'lol',
+    apiKey: idealKey,
     onError: () => {},
     onLoad: () => {},
   }
-  const idealKey = 'TODO'
 
-  it('renders the hook correctly and checks types', () => {
+  it('Should render the hook and checks types', () => {
     const { result } = renderHook(() => useRecaptcha(config));
 
     expect(result.current.execute).toBeDefined()
@@ -24,12 +24,15 @@ describe('useRecaptcha v3 tests', () => {
     expect(typeof result.current.execute).toBe('function');
   });
 
-  // TODO: async code test
-  it('Should pass api object filled after load', () => {
+  it('Should call onLoad', () => {
+    // renderHook(() => useRecaptcha(config));
+    // const spy = jest.spyOn(config, 'onLoad').mockImplementation(()=>{})
+    // expect(spy).toBeCalled()
+
+    // spy.mockReset();
+    // spy.mockRestore(); TODO
   });
 
-  it('Should call onLoad', () => {
-  });
 
   it('Should add google script', () => {
   });

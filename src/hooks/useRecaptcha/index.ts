@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useScript from "react-script-hook";
 import { v3ApiBasePath } from "./constants";
+import { injectStyle, isBrowser } from "./helpers";
 import {
   ConfigV2,
   ConfigV2Specific,
@@ -21,9 +22,14 @@ import {
  */
 export function useRecaptcha(config: ConfigV2): RecaptchaApiV2;
 export function useRecaptcha(config: ConfigV3): RecaptchaApiV3;
-export function useRecaptcha(
-  {version, onLoad, onError, apiKey, checkForExisting = true, ...restConfigs}: RecaptchaConfig
-): RecaptchaApi {
+export function useRecaptcha({
+  apiKey,
+  version = RecaptchaVersionEnum.V3,
+  onLoad = () => {},
+  onError = () => {},
+  checkForExisting = true,
+  ...restConfigs
+}: RecaptchaConfig): RecaptchaApi {
     const isValidVersion =
       version === RecaptchaVersionEnum.V2 || version === RecaptchaVersionEnum.V3
     if (!isValidVersion) throw new Error('Invalid reCaptcha version provided')
@@ -32,6 +38,7 @@ export function useRecaptcha(
     const [recaptcha, setRecaptcha] = useState<RecaptchaV3Instance | null>(null)
     const [recaptchaLoaded, setRecaptchaLoaded] = useState<boolean>(false)
     const [scriptInjectError, setScriptInjectError] = useState(null)
+    const [shouldHideDefaultBadge, setShouldHideDefaultBadge] = useState(false)
     // TODO: ask for refactor ideas
     let error: any = null;
 
@@ -39,9 +46,18 @@ export function useRecaptcha(
       // @ts-ignore TODO: implement
       const { container, onVerify } = restConfigs as Omit<ConfigV2Specific, 'version'>
     } else {
-      // @ts-ignore TODO: implement
       const { hideDefaultBadge } = restConfigs as Omit<ConfigV3Specific, 'version'>
+
+      if (hideDefaultBadge) {
+        setShouldHideDefaultBadge(true)
+      }
     }
+
+    useEffect(() => {
+      if (isBrowser && shouldHideDefaultBadge) {
+        injectStyle('.grecaptcha-badge { visibility: hidden; }');
+      }
+    }, [shouldHideDefaultBadge])
 
     const updateCaptchaInstance = () => {
       (window as any).grecaptcha.ready(() => {
@@ -95,7 +111,16 @@ export function useRecaptcha(
     }
 
     const v3Api: RecaptchaApiV3 = {
-      execute: () => new Promise(() => {}), // execute ? execute : stub func or null as func
+      // TODO: currently support only `Programmatically invoke the challenge` method
+      // But would be nice to have `Automatically bind the challenge` to a button method
+      // https://developers.google.com/recaptcha/docs/v3
+      execute: async (action: string) => {
+        if (!recaptcha) {
+          throw new Error('Recaptcha script not available');
+        }
+
+        return recaptcha.execute(apiKey, { action })
+      }
     }
 
     return isV2 ? v2Api : v3Api

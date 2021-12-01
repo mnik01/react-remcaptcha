@@ -11,8 +11,8 @@ export enum RecaptchaVersionEnum {
 // Config
 export type RecaptchaCommonConfig = {
   apiKey: string
-  onLoad: () => void,
-  onError: (error: LoadingError) => void,
+  onLoad?: () => void,
+  onError?: (error: LoadingError) => void,
   checkForExisting?: boolean,
 }
 export type ConfigV2Specific = {
@@ -29,22 +29,23 @@ export type ConfigV3 = RecaptchaCommonConfig & ConfigV3Specific
 export type RecaptchaConfig = ConfigV2 | ConfigV3
 
 
-// Api returned
+// Api returned to user
 export type RecaptchaApiCommon = {}
 export type RecaptchaApiV2 = RecaptchaApiCommon & {
   forceSubmit: () => void,
 }
 export type RecaptchaApiV3 = RecaptchaApiCommon & {
-  execute: () => Promise<string>,
+  execute: <T extends string>(action: T) => Promise<string>,
 }
 export type RecaptchaApi = RecaptchaApiV2 | RecaptchaApiV3
 
 
+// Internal. Incapsulated in hook
 export interface RecaptchaV3Instance {
   ready(): Promise<void>;
   render(
       container: HTMLElement,
       config: { theme?: 'dark' | 'light'; size?: 'compact' | 'normal' },
   ): void;
-  execute(sitekey: string, config: { action: string }): string;
+  execute<T extends string>(sitekey: string, config: { action: T }): Promise<string>;
 }
