@@ -1,6 +1,6 @@
 {
   "name": "@mnik01/react-remcaptcha",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typed react hook for google v2 and v3 reCaptcha",
   "author": "mnik01",
   "license": "MIT",
