@@ -1,4 +1,5 @@
 # Typed react hook for google v2 and v3 reCaptcha
+# WIP: CURRENTLY WORK ONLY IN V3
 
 TODO: make test coverage and typescript percent badges
 
