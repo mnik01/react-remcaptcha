@@ -2,6 +2,7 @@ export type LoadingError = {
   message: string
 }
 
+// Нигде не экспортиться из index.d.ts
 // TODO: Не помешает ли енам в конечном проекте юзеров? ts/js проверить
 export enum RecaptchaVersionEnum {
   V2 = 'V2',
@@ -35,7 +36,7 @@ export type RecaptchaApiV2 = RecaptchaApiCommon & {
   forceSubmit: () => void,
 }
 export type RecaptchaApiV3 = RecaptchaApiCommon & {
-  execute: <T extends string>(action: T) => Promise<string>,
+  execute: <T extends string>(action?: T) => Promise<string>,
 }
 export type RecaptchaApi = RecaptchaApiV2 | RecaptchaApiV3
 

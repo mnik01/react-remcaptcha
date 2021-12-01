@@ -113,7 +113,7 @@ export function useRecaptcha({
       // TODO: currently support only `Programmatically invoke the challenge` method
       // But would be nice to have `Automatically bind the challenge` to a button method
       // https://developers.google.com/recaptcha/docs/v3
-      execute: async (action: string) => {
+      execute: async (action: string = 'submit') => {
         if (!recaptcha) {
           throw new Error('Recaptcha script not available');
         }
